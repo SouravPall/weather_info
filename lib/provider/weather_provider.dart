@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_info/models/current_response_model.dart';
 import 'package:weather_info/models/forecast_response_model.dart';
 import 'package:weather_info/utils/constants.dart';
@@ -15,9 +16,27 @@ class WeatherProvider extends ChangeNotifier{
 
   bool get hasDataLoaded => currentResponseModel != null && forecastResponseModel != null;
 
+  bool get isFahrenheit => unit == imperial;
+
   void setNewLocation(double lat, double lng){
     latitude = lat;
     longitude = lng;
+  }
+
+  void setTempUnit(bool tag){
+    unit = tag ? imperial : metric;
+    unitSymbol = tag ? fahrenheit : celsius;
+    notifyListeners();
+  }
+
+   Future<bool> setPreferenceTempUnitValue(bool tag) async{
+    final pref = await SharedPreferences.getInstance();
+    return pref.setBool('unit', tag);
+  }
+
+  Future<bool> getPreferenceTempUnitValue() async{
+    final pref = await SharedPreferences.getInstance();
+    return pref.getBool('unit') ?? false;
   }
 
   getWeatherData(){

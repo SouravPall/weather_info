@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:weather_info/pages/settings_page.dart';
 import 'package:weather_info/provider/weather_provider.dart';
 import 'package:weather_info/utils/constants.dart';
 import 'package:weather_info/utils/helper_function.dart';
@@ -28,11 +29,15 @@ class _WeatherPageState extends State<WeatherPage> {
     super.didChangeDependencies();
   }
 
-  _getData() {
-    determinePosition().then((position){
-      provider.setNewLocation(position.latitude, position.longitude);
-      provider.getWeatherData();
-    });
+  _getData() async{
+   try{
+     final position = await determinePosition();
+     provider.setNewLocation(position.latitude, position.longitude);
+     provider.setTempUnit(await provider.getPreferenceTempUnitValue());
+     provider.getWeatherData();
+   }catch(error){
+     rethrow;
+   }
   }
 
   @override
@@ -54,7 +59,7 @@ class _WeatherPageState extends State<WeatherPage> {
               icon: const Icon(Icons.location_searching)
           ),
           IconButton(
-              onPressed: () {},
+              onPressed: () => Navigator.pushNamed(context, SettingsPage.routeName),
               icon: const Icon(Icons.settings)
           )
         ],
@@ -98,13 +103,13 @@ class _WeatherPageState extends State<WeatherPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.network('$iconPrefix${response.weather![0].icon}$iconSuffix', fit: BoxFit.cover,color: Colors.white,),
-              Text('${response.main!.temp!.round()}$degree$celsius', style: textTempBig80,),
+              Text('${response.main!.temp!.round()}$degree${provider.unitSymbol}', style: textTempBig80,),
             ],
           ),
         ),
         Column(
           children: [
-            Text('Feels Like ${response.main!.feelsLike!.round()}$degree$celsius', style: textNormal16,),
+            Text('Feels Like ${response.main!.feelsLike!.round()}$degree${provider.unitSymbol}', style: textNormal16,),
             const SizedBox(height: 8,),
             Text('${response.weather![0].main}, ${response.weather![0].description}', style: textNormal16,),
           ],
