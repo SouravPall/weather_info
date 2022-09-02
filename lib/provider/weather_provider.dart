@@ -1,11 +1,12 @@
 import 'dart:convert';
-
+import 'package:geocoding/geocoding.dart' as geo;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_info/models/current_response_model.dart';
 import 'package:weather_info/models/forecast_response_model.dart';
 import 'package:weather_info/utils/constants.dart';
+import 'package:weather_info/utils/helper_function.dart';
 
 class WeatherProvider extends ChangeNotifier{
   CurrentResponseModel? currentResponseModel;
@@ -42,6 +43,24 @@ class WeatherProvider extends ChangeNotifier{
   getWeatherData(){
     _getCurrentData();
     _getForecastData();
+  }
+
+  void convertAddressToLatLng(String result) async{
+    try{
+      final locationList =await geo.locationFromAddress(result);
+      if(locationList.isNotEmpty){
+        final location = locationList.first;
+        setNewLocation(location.latitude, location.longitude);
+        getWeatherData();
+      } else{
+        print('City not found');
+      }
+    }catch(error){
+      //TODO EasyLoading .......
+
+     print(error.toString());
+
+    }
   }
 
   void _getCurrentData() async{

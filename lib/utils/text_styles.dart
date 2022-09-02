@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 
 const textTempBig80 = TextStyle(
-    fontSize: 70,
+    fontSize: 80,
     color:  Colors.white
 );
 const textTemp16 = TextStyle(
     fontSize: 16,
+    color:  Colors.white
+);
+
+const textCondition20 = TextStyle(
+    fontSize: 20,
     color:  Colors.white
 );
 const textTemp16White54 = TextStyle(

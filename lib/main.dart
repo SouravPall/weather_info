@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       title: 'Weather Info',
       theme: ThemeData(
         fontFamily: 'MerriweatherSans',
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.blue,
       ),
       initialRoute: WeatherPage.routeName,
       routes: {
