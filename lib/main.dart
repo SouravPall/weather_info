@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:weather_info/pages/settings_page.dart';
 import 'package:weather_info/pages/weather_page.dart';
+import 'package:weather_info/provider/weather_provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (_) => WeatherProvider(),
+      child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -20,6 +25,7 @@ class MyApp extends StatelessWidget {
       initialRoute: WeatherPage.routeName,
       routes: {
         WeatherPage.routeName : (_) => WeatherPage(),
+        SettingsPage.routeName : (_) => SettingsPage(),
       },
     );
   }
