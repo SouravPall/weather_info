@@ -146,6 +146,63 @@ class _WeatherPageState extends State<WeatherPage> {
   }
 
   Widget _forecastWeatherSection() {
-    return const Center();
+    return  Container(
+      margin: const EdgeInsets.only(top: 20),
+      height: 160,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: provider.forecastResponseModel!.list!.length,
+        itemBuilder: (context, index){
+          final forecastM = provider.forecastResponseModel!.list![index];
+          return Padding(
+            padding: const EdgeInsets.only(left: 15),
+            child: Container(
+              height: 160,
+              width: 160,
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.13),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      getFormattedDateTime(forecastM.dt!, 'MMM dd,yyyy'),
+                      style: textNormal16,
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      getFormattedDateTime(forecastM.dt!, 'hh:mm a'),
+                      style: textNormal16,
+                    ),
+                    Image.network(
+                      '$iconPrefix${forecastM.weather![0].icon}$iconSuffix',
+                      fit: BoxFit.cover,
+                      height: 50,
+                      width: 50,
+                      color: Colors.white,
+                    ),
+                    Text(
+                      '${forecastM.main!.temp!.round()} $degree${provider.unitSymbol}',
+                      style: textNormal16,
+                    ),
+                    Chip(
+                      backgroundColor: Colors.cyan[400],
+                      label: Text(
+                        forecastM.weather![0].description!,
+                        style: textNormal16,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+          );
+        }
+      ),
+    );
   }
 }

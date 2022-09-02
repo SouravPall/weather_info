@@ -11,6 +11,7 @@ class WeatherProvider extends ChangeNotifier{
   ForecastResponseModel? forecastResponseModel;
   double latitude = 0.0, longitude = 0.0;
   String unit = 'metric';
+  String unitSymbol = celsius;
 
   bool get hasDataLoaded => currentResponseModel != null && forecastResponseModel != null;
 
