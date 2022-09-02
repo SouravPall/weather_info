@@ -60,7 +60,9 @@ class _WeatherPageState extends State<WeatherPage> {
             icon: const Icon(Icons.search)),
         actions: [
           IconButton(
-              onPressed: () {}, icon: const Icon(Icons.location_searching)),
+              onPressed: () {
+                _getData();
+              }, icon: const Icon(Icons.location_searching)),
           IconButton(
               onPressed: () =>
                   Navigator.pushNamed(context, SettingsPage.routeName),
