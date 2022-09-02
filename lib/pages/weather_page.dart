@@ -88,10 +88,10 @@ class _WeatherPageState extends State<WeatherPage> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children:[
-        const SizedBox(height: 100,),
+        const SizedBox(height: 90,),
         Text(getFormattedDateTime(response!.dt!, 'MMM  dd, yyyy'), style: textDateHeader18,),
         const SizedBox(height: 10,),
-        Text('${response.name},${response.sys!.country}', style: textAddress24,),
+        Text('${response.name},${response.sys!.country}', style: textAddress26,),
         Padding(
           padding: const EdgeInsets.all(7),
           child: Row(
@@ -117,6 +117,30 @@ class _WeatherPageState extends State<WeatherPage> {
             Text('Pressure: ${response.main!.pressure}hPa', style: textNormal16White54,),
           ],
         ),
+        const SizedBox(height: 10,),
+        Wrap(
+          children: [
+            Text('Visibility: ${response.visibility}meter', style: textNormal16White54,),
+            const SizedBox(width: 10,),
+            Text('Wind: ${response.wind!.speed}m/s', style: textNormal16White54,),
+          ],
+        ),
+        const SizedBox(height: 10,),
+        Wrap(
+          children: [
+            Text('Degree: ${response.wind!.deg}$degree', style: textNormal16White54,),
+            const SizedBox(width: 10,),
+            Text('Clouds: ${response.clouds!.all}%', style: textNormal16White54,),
+          ],
+        ),
+        const SizedBox(height: 20,),
+        Column(
+          children: [
+            Text('Sun Rise  ${getFormattedDateTime(response.sys!.sunrise!, 'hh:mm a')}', style: textNormal16,),
+            const SizedBox(height: 8,),
+            Text('Sun Set  ${getFormattedDateTime(response.sys!.sunset!, 'hh:mm a')}', style: textNormal16,),
+          ],
+        )
       ],
     );
   }

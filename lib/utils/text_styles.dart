@@ -12,8 +12,8 @@ const textTemp16White54 = TextStyle(
     fontSize: 16,
     color:  Colors.white54
 );
-const textAddress24 = TextStyle(
-    fontSize: 24,
+const textAddress26 = TextStyle(
+    fontSize: 26,
     color:  Colors.white
 );
 
