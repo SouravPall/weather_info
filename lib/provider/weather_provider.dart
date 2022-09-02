@@ -12,6 +12,8 @@ class WeatherProvider extends ChangeNotifier{
   double latitude = 0.0, longitude = 0.0;
   String unit = 'metric';
 
+  bool get hasDataLoaded => currentResponseModel != null && forecastResponseModel != null;
+
   void setNewLocation(double lat, double lng){
     latitude = lat;
     longitude = lng;
@@ -30,7 +32,7 @@ class WeatherProvider extends ChangeNotifier{
       final map = jsonDecode(response.body);
       if(response.statusCode == 200){
         currentResponseModel = CurrentResponseModel.fromJson(map);
-        print(currentResponseModel!.main!.temp!.round());
+        //print(currentResponseModel!.main!.temp!.round());
         notifyListeners();
       } else{
         print(map['message']);
@@ -48,7 +50,7 @@ class WeatherProvider extends ChangeNotifier{
       final map = jsonDecode(response.body);
       if(response.statusCode == 200){
         forecastResponseModel = ForecastResponseModel.fromJson(map);
-        print(forecastResponseModel!.list!.length);
+        //print(forecastResponseModel!.list!.length);
         notifyListeners();
       } else{
         print(map['message']);
